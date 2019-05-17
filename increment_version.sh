@@ -4,12 +4,13 @@
 
 # Parse command line options.
 
-while getopts ":Mmp" Option
+while getopts ":Mmpr" Option
 do
   case $Option in
     M ) major=true;;
     m ) minor=true;;
     p ) patch=true;;
+    r ) rc=true;;
   esac
 done
 
@@ -25,7 +26,7 @@ a=( ${version//./ } )
 
 if [ ${#a[@]} -ne 3 ]
 then
-  echo "usage: $(basename $0) [-Mmp] major.minor.patch"
+  echo "usage: $(basename $0) [-Mmp] major.minor.patch[-rc'rc']"
   exit 1
 fi
 
@@ -49,5 +50,12 @@ then
   ((a[2]++))
 fi
 
-echo "${a[0]}.${a[1]}.${a[2]}"
+if [ ! -z $rc ]
+then
+  b=( ${a[2]//-rc/ } )
+  ((b[1]++))
+  echo "${a[0]}.${a[1]}.${b[0]}-rc${b[1]}"
+  exit 0
+fi
 
+echo "${a[0]}.${a[1]}.${a[2]}"
