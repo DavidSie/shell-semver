@@ -26,7 +26,7 @@ $ ./increment_version.sh -r 1.2.2-rc1
 ## Testing ##
 
 ### step 1 ###
-install bats
+install [bats](https://github.com/sstephenson/bats)
 
 ### step 2 ###
 ```bash
